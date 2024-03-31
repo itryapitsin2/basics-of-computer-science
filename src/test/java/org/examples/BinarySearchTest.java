@@ -3,7 +3,9 @@ package org.examples;
 import org.examples.algorithms.search.BinarySearch;
 import org.examples.algorithms.search.LinearSearch;
 import org.examples.algorithms.sort.BubbleSort;
+import org.examples.algorithms.sort.CombSort;
 import org.examples.algorithms.sort.InsertionSort;
+import org.examples.algorithms.sort.MixSort;
 import org.examples.algorithms.sort.SelectionSort;
 import org.examples.types.Array;
 import org.examples.types.Comparable;
@@ -91,6 +93,46 @@ public class BinarySearchTest {
     public void searchInSelectionOrderedArray() {
         int maxCount = 25;
         OrderedArray<Element> array = new OrderedArray<>(Element.class, maxCount, new SelectionSort<>());
+        Random rand = new Random();
+
+        for (int i = 0; i < maxCount; i++) {
+            array.insert(i, new Element(rand.nextInt(100)));
+        }
+
+        Element i = array.getItem(5);
+        BinarySearch<Element> linearSearch = new BinarySearch<>();
+        Assertions.assertEquals(linearSearch.has(array, i), 5);
+
+        i = array.getItem(9);
+        Assertions.assertEquals(linearSearch.has(array, i), 9);
+
+        Assertions.assertNotEquals(linearSearch.has(array, new Element(i.getValue() + 1000)), 9);
+    }
+
+    @Test
+    public void searchInMixSortOrderedArray() {
+        int maxCount = 25;
+        OrderedArray<Element> array = new OrderedArray<>(Element.class, maxCount, new MixSort<>());
+        Random rand = new Random();
+
+        for (int i = 0; i < maxCount; i++) {
+            array.insert(i, new Element(rand.nextInt(100)));
+        }
+
+        Element i = array.getItem(5);
+        BinarySearch<Element> linearSearch = new BinarySearch<>();
+        Assertions.assertEquals(linearSearch.has(array, i), 5);
+
+        i = array.getItem(9);
+        Assertions.assertEquals(linearSearch.has(array, i), 9);
+
+        Assertions.assertNotEquals(linearSearch.has(array, new Element(i.getValue() + 1000)), 9);
+    }
+
+    @Test
+    public void searchInCombSortOrderedArray() {
+        int maxCount = 25;
+        OrderedArray<Element> array = new OrderedArray<>(Element.class, maxCount, new CombSort<>());
         Random rand = new Random();
 
         for (int i = 0; i < maxCount; i++) {
